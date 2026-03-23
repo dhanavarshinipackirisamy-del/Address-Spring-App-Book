@@ -13,12 +13,10 @@ public class AddressService {
     private List<Address> list = new ArrayList<>();
     private int counter = 1;
 
-    // GET ALL
     public List<Address> getAll() {
         return list;
     }
 
-    // GET BY ID
     public Address getById(int id) {
         return list.stream()
                 .filter(a -> a.getId() == id)
@@ -26,14 +24,12 @@ public class AddressService {
                 .orElse(null);
     }
 
-    // CREATE
     public Address create(AddressDTO dto) {
         Address addr = new Address(counter++, dto.name, dto.city);
         list.add(addr);
         return addr;
     }
 
-    // UPDATE
     public Address update(int id, AddressDTO dto) {
         Address addr = getById(id);
         if (addr != null) {
@@ -43,7 +39,6 @@ public class AddressService {
         return addr;
     }
 
-    // DELETE
     public void delete(int id) {
         list.removeIf(a -> a.getId() == id);
     }
