@@ -1,5 +1,7 @@
 package com.bridgelabz.addressspringappbook.controller;
 
+import com.bridgelabz.addressspringappbook.dto.AddressDTO;
+import com.bridgelabz.addressspringappbook.model.Address;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -11,30 +13,6 @@ public class AddressController {
 
     private List<Address> list = new ArrayList<>();
     private int counter = 1;
-
-    // Model class (inner class for now)
-    static class Address {
-        private int id;
-        private String name;
-        private String city;
-
-        public Address() {}
-
-        public Address(int id, String name, String city) {
-            this.id = id;
-            this.name = name;
-            this.city = city;
-        }
-
-        public int getId() { return id; }
-        public void setId(int id) { this.id = id; }
-
-        public String getName() { return name; }
-        public void setName(String name) { this.name = name; }
-
-        public String getCity() { return city; }
-        public void setCity(String city) { this.city = city; }
-    }
 
     // GET ALL
     @GetMapping("/")
@@ -51,21 +29,21 @@ public class AddressController {
                 .orElse(null);
     }
 
-    // CREATE
+    // CREATE (use DTO)
     @PostMapping("/")
-    public Address create(@RequestBody Address addr) {
-        addr.setId(counter++);
+    public Address create(@RequestBody AddressDTO dto) {
+        Address addr = new Address(counter++, dto.name, dto.city);
         list.add(addr);
         return addr;
     }
 
-    // UPDATE
+    // UPDATE (use DTO)
     @PutMapping("/{id}")
-    public Address update(@PathVariable int id, @RequestBody Address newAddr) {
+    public Address update(@PathVariable int id, @RequestBody AddressDTO dto) {
         Address addr = getById(id);
         if (addr != null) {
-            addr.setName(newAddr.getName());
-            addr.setCity(newAddr.getCity());
+            addr.setName(dto.name);
+            addr.setCity(dto.city);
         }
         return addr;
     }
