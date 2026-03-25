@@ -1,24 +1,29 @@
 package com.bridgelabz.addressspringappbook.model;
 
+import com.bridgelabz.addressspringappbook.dto.AddressDTO;
+
 public class Address {
+
+    private static int counter = 1;
+
     private int id;
     private String name;
     private String city;
+    private String phone;
 
-    public Address(int id, String name, String city) {
-        this.id = id;
-        this.name = name;
-        this.city = city;
+    public Address(AddressDTO dto) {
+        this.id = counter++;
+        this.name = dto.getName();
+        this.city = dto.getCity();
+        this.phone = dto.getPhone();
     }
 
-    public Address() {}
-
     public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-
     public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
     public String getCity() { return city; }
+    public String getPhone() { return phone; }
+
+    public void setName(String name) { this.name = name; }
     public void setCity(String city) { this.city = city; }
+    public void setPhone(String phone) { this.phone = phone; }
 }
